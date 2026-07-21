@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
@@ -9,7 +9,6 @@ import {
   Check, 
   Globe, 
   CheckCircle2, 
-  UploadCloud, 
   Sparkles
 } from 'lucide-react';
 import { getCompanyByHostname, type CompanyConfig } from './config/companies';
@@ -23,9 +22,7 @@ export default function App() {
   const [company, setCompany] = useState<CompanyConfig | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const [dragActive, setDragActive] = useState(false);
-  const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
+
   
   // Idioma activo
   const [lang, setLang] = useState<Language>('es');
@@ -52,13 +49,13 @@ export default function App() {
     actividad: z.string().min(5, t.valDescMore),
     tieneSitioWeb: z.enum(['si', 'no']),
     sitioWebActual: z.string().optional(),
-    tipoPagina: z.string({ required_error: t.valSelectOpt }),
+    tipoPagina: z.string().min(1, t.valSelectOpt),
     objetivos: z.array(z.string()).min(1, t.valMin1Obj),
     secciones: z.array(z.string()).min(1, t.valMin1Sec),
-    tieneLogo: z.string({ required_error: t.valSelectOpt }),
-    tieneFotos: z.string({ required_error: t.valSelectOpt }),
-    tieneTextos: z.string({ required_error: t.valSelectOpt }),
-    estiloVisual: z.string({ required_error: t.valSelectOpt }),
+    tieneLogo: z.string().min(1, t.valSelectOpt),
+    tieneFotos: z.string().min(1, t.valSelectOpt),
+    tieneTextos: z.string().min(1, t.valSelectOpt),
+    estiloVisual: z.string().min(1, t.valSelectOpt),
     colores: z.string().min(2, t.valMin2Char),
     referencias: z.string().optional(),
     mediosContacto: z.array(z.string()).min(1, t.valMin1Medio),
@@ -222,7 +219,6 @@ export default function App() {
         document.body.removeChild(iframe);
       }, 2000);
 
-      setIsSubmitted(true);
       setCurrentStep(19);
     } catch (error) {
       console.error('Error al enviar:', error);
@@ -232,33 +228,7 @@ export default function App() {
     }
   };
 
-  // Drag and drop para archivos opcionales (por si se reactiva)
-  const handleDrag = (e: React.DragEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    if (e.type === "dragenter" || e.type === "dragover") {
-      setDragActive(true);
-    } else if (e.type === "dragleave") {
-      setDragActive(false);
-    }
-  };
 
-  const handleDrop = (e: React.DragEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setDragActive(false);
-    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
-      const filesArray = Array.from(e.dataTransfer.files);
-      setUploadedFiles(prev => [...prev, ...filesArray]);
-    }
-  };
-
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      const filesArray = Array.from(e.target.files);
-      setUploadedFiles(prev => [...prev, ...filesArray]);
-    }
-  };
 
   if (!company) {
     return (
