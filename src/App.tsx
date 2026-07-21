@@ -243,9 +243,9 @@ export default function App() {
   const primaryText = { color: company.primaryColor };
 
   return (
-    <div className="min-h-screen bg-[#F8FAFC] flex flex-col justify-between py-12 px-4 sm:px-6 lg:px-8 transition-colors duration-300">
+    <div className="min-h-screen bg-[#F8FAFC] flex flex-col justify-between py-3 sm:py-12 px-3 sm:px-6 lg:px-8 transition-colors duration-300">
       {/* Cabecera dinámica de la empresa con Selector de Idioma */}
-      <header className="max-w-2xl mx-auto w-full flex items-center justify-between mb-8">
+      <header className="max-w-2xl mx-auto w-full flex items-center justify-between mb-4 sm:mb-8">
         <div className="flex items-center gap-3">
           {/* Ocultamos el logo en el paso 1 porque se mostrará gigante y centrado */}
           {company.logoUrl && currentStep > 1 ? (
@@ -288,8 +288,8 @@ export default function App() {
       </header>
 
       {/* Contenedor principal con animaciones */}
-      <main className="max-w-2xl mx-auto w-full bg-white rounded-2xl border border-slate-200/80 shadow-[0_10px_30px_rgba(0,0,0,0.04)] p-6 sm:p-10 flex flex-col justify-center min-h-[500px]">
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+      <main className="max-w-2xl mx-auto w-full bg-white rounded-2xl border border-slate-200/80 shadow-[0_10px_30px_rgba(0,0,0,0.04)] p-4 sm:p-10 flex flex-col justify-center min-h-[320px] sm:min-h-[500px]">
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 sm:space-y-6">
           <AnimatePresence mode="wait">
             
             {/* PANTALLA 1: Introducción */}
@@ -1170,7 +1170,7 @@ export default function App() {
 
       {/* Navegación y pie del formulario */}
       {currentStep > 1 && currentStep < 19 && (
-        <div className="max-w-2xl mx-auto w-full flex items-center justify-between mt-8 px-2">
+        <div className="max-w-2xl mx-auto w-full flex items-center justify-between mt-4 sm:mt-8 px-2">
           <button
             type="button"
             onClick={prevStep}
@@ -1207,7 +1207,7 @@ export default function App() {
 
       {/* Indicador de barra de progreso en el inferior de las preguntas */}
       {currentStep > 1 && currentStep < 19 && (
-        <div className="max-w-2xl mx-auto w-full mt-4 px-2">
+        <div className="max-w-2xl mx-auto w-full mt-3 sm:mt-4 px-2">
           <div className="w-full bg-slate-200 h-1.5 rounded-full overflow-hidden">
             <div 
               className="h-full rounded-full transition-all duration-300"
@@ -1221,7 +1221,7 @@ export default function App() {
       )}
 
       {/* Pie de página con información de contacto dinámico */}
-      <footer className="max-w-2xl mx-auto w-full text-center mt-12 text-xs text-slate-400 space-y-2">
+      <footer className="max-w-2xl mx-auto w-full text-center mt-6 sm:mt-12 text-xs text-slate-400 space-y-2">
         <p className="font-semibold text-slate-500">{company.name} © 2026</p>
         <div className="flex flex-wrap justify-center gap-x-4 gap-y-1">
           <span>{company.address}</span>
